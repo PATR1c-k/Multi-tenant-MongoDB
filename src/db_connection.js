@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // MongoDB URI
-const url = "mongodb+srv://pratik:test123@cluster0.am5xmqs.mongodb.net/admindb"; // Ensure this is not undefined
+const url = process.env.ADMIN_URL; // Ensure this is not undefined
 
 const connect = async () => {
   try {

@@ -1,6 +1,6 @@
 const { connect } = require("./db_connection.js");
 const mongoose = require("mongoose");
-const url = "mongodb+srv://pratik:test123@cluster0.am5xmqs.mongodb.net/admindb";
+const url = process.env.ADMIN_URL;
 
 let db;
 
