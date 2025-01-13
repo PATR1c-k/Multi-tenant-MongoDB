@@ -1,9 +1,12 @@
 const express = require("express");
 const { getTenantModel } = require("./admindb.js");
 const { getCustomerModel } = require("./tenantdb.js");
+const dotenv = require("dotenv");
 const app = express();
 
-const port = 4000;
+dotenv.config();
+
+const port = process.env.PORT;
 
 // Middleware to parse JSON request body
 app.use(express.json());

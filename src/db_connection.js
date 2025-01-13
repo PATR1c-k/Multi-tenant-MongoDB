@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
 // MongoDB URI
-const url =
-  process.env.ADMIN_URL ||
-  "mongodb+srv://pratik:test123@cluster0.am5xmqs.mongodb.net/admindb"; // Ensure this is not undefined
+dotenv.config();
 
+const url = process.env.MONGOURL;
 const connect = async () => {
   try {
     const connection = await mongoose.connect(url, {
