@@ -99,6 +99,10 @@ app.get("/customer", async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Listening at port ${port}`);
+app.listen(port, (error) => {
+  if (error) {
+    console.log("Failed to Start the server.");
+  } else {
+    console.log(`Listening at port ${port}`);
+  }
 });
