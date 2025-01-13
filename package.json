@@ -1,0 +1,20 @@
+{
+  "name": "multi-tenant-db",
+  "version": "1.0.0",
+  "description": "This is Test1",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "keywords": [
+    "Multi-tenant"
+  ],
+  "author": "Pratik Kaple",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.4",
+    "nodemon": "^3.1.9"
+  }
+}
