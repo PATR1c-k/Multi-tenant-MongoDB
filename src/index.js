@@ -3,6 +3,16 @@ const { getTenantModel } = require("./admindb.js");
 const { getCustomerModel } = require("./tenantdb.js");
 const dotenv = require("dotenv");
 const app = express();
+const cors = require("cors");
+
+// enabled to talk with frontEND
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 dotenv.config();
 
@@ -52,6 +62,7 @@ app.post("/customer", async (req, res) => {
 // GET endpoint to create or fetch tenant
 app.get("/tenant", async (req, res) => {
   const tenantID = req.query.tenantID;
+  console.log("Request Received:", req.query);
 
   if (!tenantID) {
     return res.status(400).send("Tenant ID is required");
@@ -72,32 +83,24 @@ app.get("/tenant", async (req, res) => {
 });
 
 // GET endpoint to fetch or create customer for a specific tenant
-app.get("/customer", async (req, res) => {
-  const { tenantID, customer } = req.query;
+app.get("/customers", async (req, res) => {
+  const { tenantID } = req.query;
 
-  if (!tenantID || !customer) {
-    return res.status(400).send("Tenant ID and customer name are required");
+  if (!tenantID) {
+    return res.status(400).json({ error: "Tenant ID is Required" });
   }
 
   try {
-    const tenantModel = await getTenantModel();
-    const tenant = await tenantModel.findOne({ id: tenantID });
-
-    if (!tenant) {
-      return res.sendStatus(404); // Tenant not found
-    }
-
     const customerModel = await getCustomerModel(tenantID);
-    const customerDoc = await customerModel.findOneAndUpdate(
-      { customerName: customer },
-      { customerName: customer },
-      { upsert: true, new: true }
-    );
+    const customers = await customerModel.find();
 
-    res.json(customerDoc); // Send response as JSON
+    if (customers.length === 0) {
+      return res.status(404).json({ Message: "No customers Yet!!" });
+    }
+    res.status(200).json(customers);
   } catch (error) {
-    console.error("Error fetching customer:", error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error fetching customers:", error);
+    res.status(500).json({ error: "Failed to fetch Customers" });
   }
 });
 

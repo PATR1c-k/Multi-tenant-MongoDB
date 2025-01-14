@@ -3,8 +3,8 @@ const dotenv = require("dotenv");
 
 // MongoDB URI
 dotenv.config();
-
 const url = process.env.MONGOURL;
+
 const connect = async () => {
   try {
     const connection = await mongoose.connect(url, {
